@@ -1,0 +1,45 @@
+################################################################################
+# Description: Sync MySQL all tables to StarRocks
+################################################################################
+source:
+  type: mysql
+  hostname: rds62-mysql8-shinho-oioc-prd.cml59tuhojqq.rds.cn-north-1.amazonaws.com.cn
+  port: 3306
+  username: rds_replic
+  password: Rdsreplic@20240701
+  tables: x5869428523766264.code_check_record, x5869428523766264.code_check_record_detail, x5869428523766264.audit_record, x5869428523766264.audit_record_detail, x5869428523766264.custom_scan_information_report
+  server-id: 5410-5415
+  server-time-zone: Asia/Shanghai
+#  type: mysql
+#  hostname: rds62-mysql8-shinho-oioc-prd.cml59tuhojqq.rds.cn-north-1.amazonaws.com.cn
+#  port: 3306
+#  username: rds_replic
+#  password: Rdsreplic@20240701
+#  tables: x5869428523766264.code_check_record*, x5869428523766264.code_check_record*, x5869428523766264.custom_scan_information_report
+#  server-id: 5410-5415
+#  server-time-zone: Asia/Shanghai
+
+sink:
+  type: starrocks
+  name: StarRocks Sink
+  jdbc-url: jdbc:mysql://10.8.2.119:9030
+  load-url: 10.8.2.119:8030
+  username: root
+  password: Shinho@123
+  table.create.properties.replication_num: 1
+
+route:
+  - source-table: x5869428523766264.code_check_record
+    sink-table: src_oioc_oioc.code_check_record
+  - source-table: x5869428523766264.code_check_record_detail
+    sink-table: src_oioc_oioc.code_check_record_detail
+  - source-table: x5869428523766264.audit_record
+    sink-table: src_oioc_oioc.audit_record
+  - source-table: x5869428523766264.audit_record_detail
+    sink-table: src_oioc_oioc.audit_record_detail
+  - source-table: x5869428523766264.custom_scan_information_report
+    sink-table: src_oioc_oioc.custom_scan_information_report
+
+pipeline:
+  name: Sync one Database to StarRocks database
+  parallelism: 2

@@ -1,0 +1,26 @@
+################################################################################
+# Description: Sync MySQL all tables to StarRocks
+################################################################################
+source:
+  type: mysql
+  hostname: 10.8.3.58
+  port: 33060
+  username: root
+  password: 123456
+  tables: app_db.\.*
+  server-id: 5410-5415
+  server-time-zone: UTC
+
+sink:
+  type: starrocks
+  name: StarRocks Sink
+  jdbc-url: jdbc:mysql://10.8.2.119:9030
+  load-url: 10.8.2.119:8030
+  username: root
+  password: Shinho@123
+  table.create.properties.replication_num: 1
+
+
+pipeline:
+  name: Sync one Database to StarRocks database
+  parallelism: 2

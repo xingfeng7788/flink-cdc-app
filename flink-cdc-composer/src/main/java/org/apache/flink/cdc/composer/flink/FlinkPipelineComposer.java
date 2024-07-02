@@ -36,7 +36,6 @@ import org.apache.flink.cdc.composer.flink.translator.SchemaOperatorTranslator;
 import org.apache.flink.cdc.composer.flink.translator.TransformTranslator;
 import org.apache.flink.cdc.composer.utils.FactoryDiscoveryUtils;
 import org.apache.flink.cdc.runtime.serializer.event.EventSerializer;
-import org.apache.flink.configuration.DeploymentOptions;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
@@ -59,12 +58,14 @@ public class FlinkPipelineComposer implements PipelineComposer {
 
     public static FlinkPipelineComposer ofRemoteCluster(
             org.apache.flink.configuration.Configuration flinkConfig, List<Path> additionalJars) {
-        org.apache.flink.configuration.Configuration effectiveConfiguration =
-                new org.apache.flink.configuration.Configuration();
-        // Use "remote" as the default target
-        effectiveConfiguration.set(DeploymentOptions.TARGET, "remote");
-        effectiveConfiguration.addAll(flinkConfig);
-        StreamExecutionEnvironment env = new StreamExecutionEnvironment(effectiveConfiguration);
+        //        org.apache.flink.configuration.Configuration effectiveConfiguration =
+        //                new org.apache.flink.configuration.Configuration();
+        //        // Use "remote" as the default target
+        //        effectiveConfiguration.set(DeploymentOptions.TARGET, "remote");
+        //        effectiveConfiguration.addAll(flinkConfig);
+        //        StreamExecutionEnvironment env = new
+        // StreamExecutionEnvironment(effectiveConfiguration);
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         additionalJars.forEach(
                 jarPath -> {
                     try {
@@ -157,8 +158,9 @@ public class FlinkPipelineComposer implements PipelineComposer {
                         sinkDef.getType(), DataSinkFactory.class);
 
         // Include sink connector JAR
-        FactoryDiscoveryUtils.getJarPathByIdentifier(sinkDef.getType(), DataSinkFactory.class)
-                .ifPresent(jar -> FlinkEnvironmentUtils.addJar(env, jar));
+        //        FactoryDiscoveryUtils.getJarPathByIdentifier(sinkDef.getType(),
+        // DataSinkFactory.class)
+        //                .ifPresent(jar -> FlinkEnvironmentUtils.addJar(env, jar));
 
         // Create data sink
         return sinkFactory.createDataSink(

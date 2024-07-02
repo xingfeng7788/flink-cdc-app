@@ -17,8 +17,8 @@
 
 package org.apache.flink.cdc.composer.flink;
 
+import org.apache.flink.api.common.JobExecutionResult;
 import org.apache.flink.cdc.composer.PipelineExecution;
-import org.apache.flink.core.execution.JobClient;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 /**
@@ -40,10 +40,13 @@ public class FlinkPipelineExecution implements PipelineExecution {
 
     @Override
     public ExecutionInfo execute() throws Exception {
-        JobClient jobClient = env.executeAsync(jobName);
-        if (isBlocking) {
-            jobClient.getJobExecutionResult().get();
-        }
-        return new ExecutionInfo(jobClient.getJobID().toString(), jobName);
+        //        JobClient jobClient = env.executeAsync(jobName);
+        //        if (isBlocking) {
+        //            jobClient.getJobExecutionResult().get();
+        //        }
+        //        return new ExecutionInfo(jobClient.getJobID().toString(), jobName);
+        System.out.println("启动任务");
+        JobExecutionResult jobExecutionResult = env.execute(jobName);
+        return new ExecutionInfo(jobExecutionResult.getJobID().toString(), jobName);
     }
 }

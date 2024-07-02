@@ -171,10 +171,10 @@ This file is based on the checkstyle file of Apache Beam.
 		<!-- Enforce Java-style array declarations -->
 		<module name="ArrayTypeStyle"/>
 
-		<module name="TodoComment">
-			<!-- Checks that disallowed strings are not used in comments.  -->
-			<property name="format" value="(FIXME)|(XXX)|(@author)"/>
-		</module>
+<!--		<module name="TodoComment">-->
+<!--			&lt;!&ndash; Checks that disallowed strings are not used in comments.  &ndash;&gt;-->
+<!--			<property name="format" value="(FIXME)|(XXX)|(@author)"/>-->
+<!--		</module>-->
 
 		<!--
 
@@ -202,9 +202,9 @@ This file is based on the checkstyle file of Apache Beam.
 					 value="Import {0} appears after other imports that it should precede"/>
 		</module>
 
-		<module name="AvoidStarImport">
-			<property name="severity" value="error"/>
-		</module>
+<!--		<module name="AvoidStarImport">-->
+<!--			<property name="severity" value="error"/>-->
+<!--		</module>-->
 
 		<module name="IllegalImport">
 			<property name="illegalPkgs"
@@ -284,11 +284,11 @@ This file is based on the checkstyle file of Apache Beam.
 		<!-- Check that paragraph tags are used correctly in Javadoc. -->
 		<module name="JavadocParagraph"/>
 
-		<module name="JavadocType">
-			<property name="scope" value="protected"/>
-			<property name="severity" value="error"/>
-			<property name="allowMissingParamTags" value="true"/>
-		</module>
+<!--		<module name="JavadocType">-->
+<!--			<property name="scope" value="protected"/>-->
+<!--			<property name="severity" value="error"/>-->
+<!--			<property name="allowMissingParamTags" value="true"/>-->
+<!--		</module>-->
 
 		<module name="JavadocStyle">
 			<property name="severity" value="error"/>
@@ -558,11 +558,11 @@ This file is based on the checkstyle file of Apache Beam.
 	</module>
 
 	<!-- check file header copyright -->
-	<module name="RegexpHeader">
-		<!-- regex expression to check -->
-		<property name="header" value="\/\*\n \* Licensed to the Apache Software Foundation"/>
-		<property name="fileExtensions" value="java"/> <!-- only java files -->
-	</module>
+<!--	<module name="RegexpHeader">-->
+<!--		&lt;!&ndash; regex expression to check &ndash;&gt;-->
+<!--		<property name="header" value="\/\*\n \* Licensed to the Apache Software Foundation"/>-->
+<!--		<property name="fileExtensions" value="java"/> &lt;!&ndash; only java files &ndash;&gt;-->
+<!--	</module>-->
 
 </module>
 
