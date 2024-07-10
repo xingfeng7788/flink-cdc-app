@@ -1,5 +1,7 @@
 package org.apache.flink.cdc.cli;
 
+import org.apache.flink.api.common.restartstrategy.RestartStrategies;
+import org.apache.flink.api.common.time.Time;
 import org.apache.flink.cdc.cli.parser.PipelineDefinitionParser;
 import org.apache.flink.cdc.cli.parser.YamlPipelineDefinitionParser;
 import org.apache.flink.cdc.common.configuration.Configuration;
@@ -20,6 +22,7 @@ import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.TimeUnit;
 
 public class FlinkApp {
     /**
@@ -41,6 +44,13 @@ public class FlinkApp {
         PipelineDef pipelineDef =
                 pipelineDefinitionParser.parse(pipelineDefPath, new Configuration());
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        //    设置每3s生成一次checkpoint
+        env.enableCheckpointing(3000);
+        env.setRestartStrategy(
+                RestartStrategies.fixedDelayRestart(
+                        5, // 尝试重启的次数
+                        Time.of(10, TimeUnit.SECONDS) // 间隔
+                        ));
         int parallelism = pipelineDef.getConfig().get(PipelineOptions.PIPELINE_PARALLELISM);
         env.getConfig().setParallelism(parallelism);
         // Build Source Operator

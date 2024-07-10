@@ -3,11 +3,11 @@
 ################################################################################
 source:
   type: mysql
-  hostname: rds62-mysql8-shinho-oioc-prd.cml59tuhojqq.rds.cn-north-1.amazonaws.com.cn
+  hostname: rds49-mysql-shinho-oioc-uat.c0dvigf5kjq0.rds.cn-north-1.amazonaws.com.cn
   port: 3306
-  username: rds_replic
-  password: Rdsreplic@20240701
-  tables: x5869428523766264.code_check_record, x5869428523766264.code_check_record_detail, x5869428523766264.audit_record, x5869428523766264.audit_record_detail, x5869428523766264.custom_scan_information_report
+  username: replic_user
+  password: Replicuser@202407
+  tables: x5869428523766264.code_check_record, x5869428523766264.code_check_record_detail, x5869428523766264.audit_record, x5869428523766264.audit_record_detail, x5869428523766264.custom_scan_information_report, x5869428523766264.product, x5869428523766264.dealer
   server-id: 5410-5415
   server-time-zone: Asia/Shanghai
 #  type: mysql
@@ -39,7 +39,11 @@ route:
     sink-table: src_oioc_oioc.audit_record_detail
   - source-table: x5869428523766264.custom_scan_information_report
     sink-table: src_oioc_oioc.custom_scan_information_report
+  - source-table: x5869428523766264.product
+    sink-table: src_oioc_oioc.product
+  - source-table: x5869428523766264.dealer
+    sink-table: src_oioc_oioc.dealer
 
 pipeline:
   name: Sync one Database to StarRocks database
-  parallelism: 2
+  parallelism: 1
